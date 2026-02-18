@@ -1,44 +1,206 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bootstrap demo</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body class="container">
-    <h1></h1>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Powerlifting Data Analysis</title>
 
-    <nav class="navbar bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Powerlifting Analysis</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="nav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#overview">Overview</a></li>
+        <li class="nav-item"><a class="nav-link" href="#cleaning">Cleaning</a></li>
+        <li class="nav-item"><a class="nav-link" href="#stats">Stats</a></li>
+        <li class="nav-item"><a class="nav-link" href="#charts">Charts</a></li>
+        <li class="nav-item"><a class="nav-link" href="#conclusion">Conclusion</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="bg-light py-5 border-bottom">
+  <div class="container">
+    <h1 class="display-6 fw-bold">Powerlifting Dataset Analysis</h1>
+    <p class="lead mb-0">
+      Exploratory analysis of lifter performance using descriptive statistics and visualisations.
+      <span class="text-muted">(Bootstrap + Chart.js)</span>
+    </p>
+  </div>
+</header>
+
+<main class="container my-4">
+
+  <!-- Overview -->
+  <section id="overview" class="my-5">
+    <h2 class="fw-bold">Dataset Overview</h2>
+    <p class="text-muted">
+      This project analyses powerlifting records including bodyweight, weight class, squat/bench/deadlift,
+      total lifted, and Wilks score.
+    </p>
+
+    <div class="row g-3">
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="text-muted small">Records (rows)</div>
+            <div class="fs-4 fw-bold" id="kpiRows">—</div>
+          </div>
+        </div>
       </div>
-    </nav>
-    <main>
-      <header>
-        <h1></h1>
-        <p></p>
-      </header>
-      <section>
-        <h2></h2>
-        <canvas></canvas>
-        <section></section>
-      </section>
-      <article>
-        <h2></h2>
-        <p></p>
-        <pre></pre>
-      </article>
-    </main>
-  </body>
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-    crossorigin="anonymous"
-  ></script>
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="text-muted small">Features (columns)</div>
+            <div class="fs-4 fw-bold" id="kpiCols">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="text-muted small">Missing values</div>
+            <div class="fs-4 fw-bold" id="kpiMissing">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="text-muted small">Date updated</div>
+            <div class="fs-6 fw-bold" id="kpiUpdated">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cleaning -->
+  <section id="cleaning" class="my-5">
+    <h2 class="fw-bold">Data Cleaning</h2>
+    <ul class="text-muted">
+      <li>Checked missing values in key fields (Squat, Bench, Deadlift, Total, Wilks).</li>
+      <li>Verified numeric columns are stored as numbers.</li>
+      <li>Reviewed outliers in TotalKg and Wilks.</li>
+      <li>Filtered dataset to ~3000 rows for manageable analysis (as required).</li>
+    </ul>
+    <p class="text-muted mb-0">
+      <strong>Note:</strong> Final values and cleaning decisions will be updated once the Excel analysis is final.
+    </p>
+  </section>
+
+  <!-- Stats -->
+  <section id="stats" class="my-5">
+    <h2 class="fw-bold">Descriptive Statistics (Key Metrics)</h2>
+
+    <div class="row g-3">
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="text-muted small">Mean TotalKg</div>
+            <div class="fs-5 fw-bold" id="meanTotal">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="text-muted small">Median TotalKg</div>
+            <div class="fs-5 fw-bold" id="medianTotal">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="text-muted small">Std Dev TotalKg</div>
+            <div class="fs-5 fw-bold" id="stdevTotal">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="text-muted small">Max TotalKg</div>
+            <div class="fs-5 fw-bold" id="maxTotal">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Charts -->
+  <section id="charts" class="my-5">
+    <h2 class="fw-bold">Charts</h2>
+    <p class="text-muted">Charts are currently using sample data. Replace with final Excel values later.</p>
+
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Bodyweight vs Total (Scatter)</h5>
+            <canvas id="scatterChart" height="140"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">TotalKg Distribution (Histogram-style Bar)</h5>
+            <canvas id="histChart" height="140"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Average TotalKg by Equipment (Bar)</h5>
+            <canvas id="barChart" height="90"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conclusion -->
+  <section id="conclusion" class="my-5">
+    <h2 class="fw-bold">Conclusion</h2>
+    <p class="text-muted mb-0">
+      Once final statistics and charts are confirmed, this section will summarise the main findings
+      (e.g., relationship between bodyweight and total, distribution patterns, and equipment differences).
+    </p>
+  </section>
+
+</main>
+
+<footer class="bg-dark text-light py-4">
+  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+    <div>© <span id="year"></span> Powerlifting Analysis</div>
+    <div class="text-white-50 small">Built with Bootstrap + Chart.js • Hosted on GitHub Pages</div>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<!-- Your JS -->
+<script src="assets/js/main.js"></script>
+</body>
 </html>
