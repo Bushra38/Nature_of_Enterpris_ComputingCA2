@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Machine Learning • Powerlifting Analysis</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Your CSS (change path if needed) -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html">Powerlifting Analysis</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="nav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html#overview">Overview</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#cleaning">Cleaning</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#stats">Stats</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#charts">Charts</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#conclusion">Conclusion</a></li>
+        <li class="nav-item"><a class="nav-link active" href="ml.html">Machine Learning</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header class="bg-light py-5 border-bottom">
+  <div class="container">
+    <h1 class="display-6 fw-bold mb-2">Machine Learning: Predicting Wilks Score</h1>
+    <p class="lead mb-0 text-muted">
+      A simple regression model (Linear Regression) was trained to predict <strong>Wilks</strong> from athlete and lift performance features.
+    </p>
+  </div>
+</header>
+
+<main class="container my-4">
+
+  <!-- WHAT + WHY -->
+  <section class="my-5">
+    <h2 class="fw-bold">What is Wilks and what are we predicting?</h2>
+    <p class="text-muted">
+      The <strong>Wilks score</strong> is used in powerlifting to compare lifters across different bodyweights.
+      It adjusts strength performance relative to body mass, so a heavier lifter does not automatically score higher unless
+      their total strength increases proportionally.
+    </p>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title">Target (What we predict)</h5>
+            <p class="text-muted mb-0">
+              <strong>Wilks</strong> (numeric / continuous) → regression problem.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title">Why Wilks?</h5>
+            <p class="text-muted mb-0">
+              Wilks is more meaningful than TotalKg alone because it accounts for bodyweight and gives a fairer comparison
+              between different weight classes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="my-5">
+    <h2 class="fw-bold">Features used (Inputs)</h2>
+    <p class="text-muted">
+      The model uses the following numeric features from the dataset:
+    </p>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <ul class="text-muted mb-0">
+          <li><strong>Age</strong></li>
+          <li><strong>BodyweightKg</strong></li>
+          <li><strong>BestSquatKg</strong></li>
+          <li><strong>BestBenchKg</strong></li>
+          <li><strong>BestDeadliftKg</strong></li>
+          <li><strong>TotalKg</strong> (summary of overall performance)</li>
+        </ul>
+
+        <hr>
+        <p class="text-muted mb-0">
+          <strong>Note:</strong> TotalKg was included as a summary performance metric, while the individual lifts allowed the model
+          to capture variations in how strength is distributed across movements.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERFORMANCE -->
+  <section class="my-5">
+    <h2 class="fw-bold">Model performance</h2>
+    <p class="text-muted">
+      The dataset was split into <strong>80% training</strong> and <strong>20% testing</strong>. Performance was measured on the test set.
+    </p>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <div class="text-muted small">Mean Absolute Error (MAE)</div>
+            <div class="fs-3 fw-bold">20.72</div>
+            <p class="text-muted mb-0">
+              On average, predictions differ from the true Wilks score by about <strong>21 points</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <div class="text-muted small">R² Score</div>
+            <div class="fs-3 fw-bold">0.904</div>
+            <p class="text-muted mb-0">
+              The model explains about <strong>90.4%</strong> of the variation in Wilks scores in this dataset.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISUALS -->
+  <section class="my-5">
+    <h2 class="fw-bold">Visual analysis of results</h2>
+    <p class="text-muted">
+      These charts were generated from the Linear Regression model output.
+    </p>
+
+    <div class="row g-4">
+
+      <!-- Actual vs Pred -->
+      <div class="col-lg-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title mb-2">1) Actual vs Predicted Wilks</h5>
+            <p class="text-muted">
+              Points close to the diagonal line mean the model predicted accurately. A wider spread means larger errors.
+              Overall, the plot shows a strong linear relationship.
+            </p>
+            <img src="actual_vs_predicted.png" class="img-fluid rounded border" alt="Actual vs Predicted Wilks">
+          </div>
+        </div>
+      </div>
+
+      <!-- Residuals -->
+      <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title mb-2">2) Residuals Histogram</h5>
+            <p class="text-muted">
+              Residuals are <strong>(Actual − Predicted)</strong>. A good model has residuals centred around 0 with no strong skew.
+              Here, errors are mostly moderate with a few larger mistakes.
+            </p>
+            <img src="residuals_hist.png" class="img-fluid rounded border" alt="Residuals Histogram">
+          </div>
+        </div>
+      </div>
+
+      <!-- Coefficients -->
+      <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title mb-2">3) Feature Coefficients</h5>
+            <p class="text-muted">
+              This chart shows how each feature influences the prediction. A larger absolute value means the feature has more impact.
+              <strong>TotalKg</strong> is the strongest positive factor, while <strong>BodyweightKg</strong> is negative, which matches the idea
+              that Wilks adjusts for bodyweight.
+            </p>
+            <img src="linear_coefficients.png" class="img-fluid rounded border" alt="Linear Regression Coefficients">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LIMITATIONS -->
+  <section class="my-5">
+    <h2 class="fw-bold">Limitations</h2>
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <ul class="text-muted mb-0">
+          <li>The model only uses variables available in the dataset (no training experience, diet, sleep, etc.).</li>
+          <li>Linear Regression assumes a linear relationship, so it may miss more complex patterns.</li>
+          <li>The dataset size is moderate, and performance may change with a larger sample.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bg-dark text-light py-4">
+  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+    <div>© <span id="year"></span> Powerlifting Analysis</div>
+    <div class="text-white-50 small">Built with Bootstrap • Hosted on GitHub Pages</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

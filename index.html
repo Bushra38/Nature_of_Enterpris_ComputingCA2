@@ -9,13 +9,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Your CSS -->
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="#">Powerlifting Analysis</a>
+    <a class="navbar-brand fw-bold" href="index.html">Powerlifting Analysis</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,17 +27,19 @@
         <li class="nav-item"><a class="nav-link" href="#stats">Stats</a></li>
         <li class="nav-item"><a class="nav-link" href="#charts">Charts</a></li>
         <li class="nav-item"><a class="nav-link" href="#conclusion">Conclusion</a></li>
+        <li class="nav-item"><a class="nav-link" href="ml.html">Machine Learning</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
+<!-- Header -->
 <header class="bg-light py-5 border-bottom">
   <div class="container">
     <h1 class="display-6 fw-bold">Powerlifting Dataset Analysis</h1>
     <p class="lead mb-0">
-      Exploratory analysis of lifter performance using descriptive statistics and visualisations.
-      <span class="text-muted">(Bootstrap + Chart.js)</span>
+      Exploratory analysis of lifter performance using descriptive statistics, visualisation,
+      and a Linear Regression model to predict Wilks score.
     </p>
   </div>
 </header>
@@ -47,8 +50,9 @@
   <section id="overview" class="my-5">
     <h2 class="fw-bold">Dataset Overview</h2>
     <p class="text-muted">
-      This project analyses powerlifting records including bodyweight, weight class, squat/bench/deadlift,
-      total lifted, and Wilks score.
+      This project analyses powerlifting competition results including Age, Bodyweight,
+      Best Squat, Best Bench Press, Best Deadlift, Total Lift, and Wilks score.
+      The goal is to identify performance trends and apply machine learning to predict relative strength (Wilks).
     </p>
 
     <div class="row g-3">
@@ -60,6 +64,7 @@
           </div>
         </div>
       </div>
+
       <div class="col-md-3">
         <div class="card shadow-sm">
           <div class="card-body">
@@ -68,6 +73,7 @@
           </div>
         </div>
       </div>
+
       <div class="col-md-3">
         <div class="card shadow-sm">
           <div class="card-body">
@@ -76,6 +82,7 @@
           </div>
         </div>
       </div>
+
       <div class="col-md-3">
         <div class="card shadow-sm">
           <div class="card-body">
@@ -91,19 +98,19 @@
   <section id="cleaning" class="my-5">
     <h2 class="fw-bold">Data Cleaning</h2>
     <ul class="text-muted">
-      <li>Checked missing values in key fields (Squat, Bench, Deadlift, Total, Wilks).</li>
-      <li>Verified numeric columns are stored as numbers.</li>
-      <li>Reviewed outliers in TotalKg and Wilks.</li>
-      <li>Filtered dataset to ~3000 rows for manageable analysis (as required).</li>
+      <li>Removed rows with missing or invalid values in key columns (Age, Bodyweight, lifts, Total, Wilks).</li>
+      <li>Converted numeric columns from text to numbers for accurate calculations.</li>
+      <li>Checked for duplicate records to avoid double counting.</li>
+      <li>Reviewed extreme values to ensure realistic performance data was retained.</li>
     </ul>
     <p class="text-muted mb-0">
-      <strong>Note:</strong> Final values and cleaning decisions will be updated once the Excel analysis is final.
+      After cleaning, the dataset was prepared for descriptive statistics, visual analysis, and regression modelling.
     </p>
   </section>
 
   <!-- Stats -->
   <section id="stats" class="my-5">
-    <h2 class="fw-bold">Descriptive Statistics (Key Metrics)</h2>
+    <h2 class="fw-bold">Descriptive Statistics (Total Lift)</h2>
 
     <div class="row g-3">
       <div class="col-md-3">
@@ -114,6 +121,7 @@
           </div>
         </div>
       </div>
+
       <div class="col-md-3">
         <div class="card shadow-sm">
           <div class="card-body">
@@ -122,6 +130,7 @@
           </div>
         </div>
       </div>
+
       <div class="col-md-3">
         <div class="card shadow-sm">
           <div class="card-body">
@@ -130,6 +139,7 @@
           </div>
         </div>
       </div>
+
       <div class="col-md-3">
         <div class="card shadow-sm">
           <div class="card-body">
@@ -139,19 +149,30 @@
         </div>
       </div>
     </div>
+
+    <p class="text-muted mt-3 mb-0">
+      Total Lift represents the combined result of squat, bench press, and deadlift.
+      It provides an overview of absolute performance across the dataset.
+    </p>
   </section>
 
   <!-- Charts -->
   <section id="charts" class="my-5">
-    <h2 class="fw-bold">Charts</h2>
-    <p class="text-muted">Charts are currently using sample data. Replace with final Excel values later.</p>
+    <h2 class="fw-bold">Visual Analysis</h2>
+    <p class="text-muted">
+      The charts below highlight key patterns in strength performance across bodyweight and equipment categories.
+    </p>
 
     <div class="row g-4">
+
       <div class="col-lg-6">
         <div class="card shadow-sm">
           <div class="card-body">
             <h5 class="card-title">Bodyweight vs Total (Scatter)</h5>
             <canvas id="scatterChart" height="140"></canvas>
+            <p class="text-muted small mt-2 mb-0">
+              Shows the positive relationship between bodyweight and total lift, with visible variation among athletes.
+            </p>
           </div>
         </div>
       </div>
@@ -159,8 +180,11 @@
       <div class="col-lg-6">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h5 class="card-title">TotalKg Distribution (Histogram-style Bar)</h5>
+            <h5 class="card-title">TotalKg Distribution</h5>
             <canvas id="histChart" height="140"></canvas>
+            <p class="text-muted small mt-2 mb-0">
+              Displays the distribution of total lift values to identify common performance ranges.
+            </p>
           </div>
         </div>
       </div>
@@ -168,29 +192,40 @@
       <div class="col-lg-12">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h5 class="card-title">Average TotalKg by Equipment (Bar)</h5>
+            <h5 class="card-title">Average TotalKg by Equipment</h5>
             <canvas id="barChart" height="90"></canvas>
+            <p class="text-muted small mt-2 mb-0">
+              Compares average total lift across equipment types.
+            </p>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
   <!-- Conclusion -->
   <section id="conclusion" class="my-5">
     <h2 class="fw-bold">Conclusion</h2>
+    <p class="text-muted">
+      The analysis shows a clear positive relationship between bodyweight and total lift,
+      while also highlighting variation across equipment categories.
+    </p>
     <p class="text-muted mb-0">
-      Once final statistics and charts are confirmed, this section will summarise the main findings
-      (e.g., relationship between bodyweight and total, distribution patterns, and equipment differences).
+      The Machine Learning section further extends this analysis by predicting Wilks score using Linear Regression,
+      providing insight into relative strength performance.
     </p>
   </section>
 
 </main>
 
+<!-- Footer -->
 <footer class="bg-dark text-light py-4">
   <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
     <div>© <span id="year"></span> Powerlifting Analysis</div>
-    <div class="text-white-50 small">Built with Bootstrap + Chart.js • Hosted on GitHub Pages</div>
+    <div class="text-white-50 small">
+      Built with Bootstrap + Chart.js • Hosted on GitHub Pages
+    </div>
   </div>
 </footer>
 
@@ -200,7 +235,8 @@
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-<!-- Your JS -->
-<script src="assets/js/main.js"></script>
+<!-- Your JS (correct path for your structure) -->
+<script src="main.js"></script>
+
 </body>
 </html>

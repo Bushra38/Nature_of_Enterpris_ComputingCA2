@@ -1,0 +1,3 @@
+body { scroll-behavior: smooth; }
+.card { border-radius: 1rem; }
+header { background: linear-gradient(180deg, #f8f9fa, #ffffff); }
